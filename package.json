@@ -1,0 +1,20 @@
+{
+  "name": "rocker-radio",
+  "version": "1.0.0",
+  "description": "Rocker Rádió",
+  "main": "main.js",
+  "author": "ShadeSoft",
+  "license": "MIT",
+  "repository": "https://github.com/ShadeSoft/rocker-radio",
+  "dependencies": {
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {
+    "electron": "^5.0.3",
+    "electron-packager": "^13.1.1"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager ."
+  }
+}
