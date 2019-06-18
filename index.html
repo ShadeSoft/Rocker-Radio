@@ -7,7 +7,7 @@
 	<script>
 		function loadSongData() {
 			$.get('http://91.82.85.58:8000', function(response) {
-				var songData = $($(response).find('.streamstats')[8]).html().split(' - ');
+				var songData = $($(response).find("td:contains('Currently playing:')").siblings('.streamstats')).html().replace(/\s\[[0-9]{4}\]/, '').split(' - ');
 				$('h1 span').html(songData[1]);
 				$('h1 small').html(songData[0]);
 			});
