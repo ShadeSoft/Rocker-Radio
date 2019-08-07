@@ -6,10 +6,11 @@
 	<script>window.$ = window.jQuery = require('jquery');</script>
 	<script>
 		function loadSongData() {
-			$.get('http://91.82.85.58:8000', function(response) {
-				var songData = $($(response).find("td:contains('Currently playing:')").siblings('.streamstats')).html().replace(/\s\[[0-9]{4}\]/, '').split(' - ');
-				$('h1 span').html(songData[1]);
-				$('h1 small').html(songData[0]);
+			$.get('http://stream.diazol.hu:35200', function(response) {
+				var box = $(response).find(".mount:contains('Mount Point /live')").closest('.roundbox');
+				var songData = $(box.find("td:contains('Currently playing:')").siblings('.streamstats')).html().replace(/\s\[[0-9]{4}\]/, '').split(' - ');
+				$('h1 span').html(songData[1] ?: '');
+				$('h1 small').html(songData[0] ?: '');
 			});
 		}
 
@@ -24,6 +25,8 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,600&display=swap" rel="stylesheet">
 	<style>
 		body {
+			background: #222;
+			color: #eee;
 			margin: 0;
 			padding: 0;
 		}
@@ -49,7 +52,7 @@
 	<div>
 		<figure>
 			<h1><span></span><br><small></small></h1>
-			<audio controls autoplay src="http://91.82.85.58:8000/stream"></audio>
+			<audio controls autoplay src="http://stream.diazol.hu:35200/stream"></audio>
 		</figure>
 	</div>
 </body>
