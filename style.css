@@ -1,0 +1,27 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,600);
+
+body {
+	background: #111;
+	color: #eee;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font: 16px 'Open Sans', sans-serif;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	text-align: center;
+}
+
+img {
+	display: inline-block;
+	max-width: 250px;
+	width: 50vw;
+}
+
+#song-title { font-weight: 300; }
+
+#song-artist { font-weight: 600; }
+
+#toggle-player { cursor: pointer; }
