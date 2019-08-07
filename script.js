@@ -23,11 +23,13 @@ let togglePlayer = () => {
 	if(player.paused) {
         player.setAttribute('src', url+'/stream');
         player.play();
+        loadSongData();
         toggle.classList.remove('fa-play-circle');
         toggle.classList.add('fa-pause-circle');
     } else {
         player.pause();
         player.removeAttribute('src');
+        clearSongData();
         toggle.classList.remove('fa-pause-circle');
         toggle.classList.add('fa-play-circle');
     }
@@ -51,4 +53,9 @@ let loadSongData = () => {
         xhr.open('GET', url, true);
         xhr.send();
     }
+};
+
+let clearSongData = () => {
+    title.innerHTML = '';
+    artist.innerHTML = '';
 };
