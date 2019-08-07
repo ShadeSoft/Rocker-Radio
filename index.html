@@ -5,27 +5,23 @@
 	<title>Rocker Rádió</title>
 	<script>window.$ = window.jQuery = require('jquery');</script>
 	<script>
-		function loadSongData() {
-			$.get('http://stream.diazol.hu:35200', function(response) {
-				var box = $(response).find(".mount:contains('Mount Point /live')").closest('.roundbox');
-				var songData = $(box.find("td:contains('Currently playing:')").siblings('.streamstats')).html().replace(/\s\[[0-9]{4}\]/, '').split(' - ');
-				$('h1 span').html(songData[1] ?: '');
-				$('h1 small').html(songData[0] ?: '');
+		let loadSongData = () =>
+			$.get('http://stream.diazol.hu:35200', (response) => {
+				let box = $(response).find(".mount:contains('Mount Point /live')").closest('.roundbox');
+				let songData = $(box.find("td:contains('Currently playing:')").siblings('.streamstats')).html().replace(/\s\[[0-9]{4}]/, '').split(' - ');
+				$('h1 span').html(songData[1] ? songData[1] : '');
+				$('h1 small').html(songData[0] ? songData[0] : '');
 			});
-		}
 
-		$(document).ready(function() {
-			setInterval(function() {
-				loadSongData();
-			}, 10000);
-
+		$(document).ready(() => {
+			setInterval(() => loadSongData(), 10000);
 			loadSongData();
 		});
 	</script>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,600&display=swap" rel="stylesheet">
 	<style>
 		body {
-			background: #222;
+			background: #111;
 			color: #eee;
 			margin: 0;
 			padding: 0;
@@ -39,6 +35,10 @@
 		figure {
 			text-align: center;
 		}
+		figure img {
+			max-width: 250px;
+			width: 50vw;
+		}
 		h1 {
 			font-family: 'Open Sans', sans-serif;
 			font-weight: 600;
@@ -51,6 +51,7 @@
 <body>
 	<div>
 		<figure>
+			<a href="http://rockerradio.online" target="_blank"><img src="icon.png" alt="Rocker Rádió"></a>
 			<h1><span></span><br><small></small></h1>
 			<audio controls autoplay src="http://stream.diazol.hu:35200/stream"></audio>
 		</figure>
