@@ -3,23 +3,32 @@
 <head>
 	<meta charset="utf-8">
 	<title>Rocker Rádió</title>
-	<script>window.$ = window.jQuery = require('jquery');</script>
 	<script>
-		let loadSongData = () =>
-			$.get('http://stream.diazol.hu:35200', (response) => {
-				let box = $(response).find(".mount:contains('Mount Point /live')").closest('.roundbox');
-				let songData = $(box.find("td:contains('Currently playing:')").siblings('.streamstats')).html().replace(/\s\[[0-9]{4}]/, '').split(' - ');
-				$('h1 span').html(songData[1] ? songData[1] : '');
-				$('h1 small').html(songData[0] ? songData[0] : '');
-			});
-
-		$(document).ready(() => {
+		document.addEventListener('DOMContentLoaded', () => {
 			setInterval(() => loadSongData(), 10000);
 			loadSongData();
 		});
+
+		let loadSongData = () => {
+			let xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function() {
+				if(this.readyState === 4 && this.status === 200) {
+					let data = this.responseText
+						.match(new RegExp('<td>Currently playing:</td><td class="streamstats">([^<]+)</td>'))[1]
+						.replace(/\s\[[0-9]{4}]/, '')
+						.split(' - ');
+					document.getElementById('song-title').innerHTML = data[1] ? data[1] : '';
+					document.getElementById('song-artist').innerHTML = data[0] ? data[0] : '';
+				}
+			};
+
+			xhr.open('GET', 'http://stream.diazol.hu:35200', true);
+			xhr.send();
+		};
 	</script>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,600&display=swap" rel="stylesheet">
-	<style>
+	<style rel="stylesheet">
 		body {
 			background: #111;
 			color: #eee;
@@ -52,7 +61,7 @@
 	<div>
 		<figure>
 			<a href="http://rockerradio.online" target="_blank"><img src="icon.png" alt="Rocker Rádió"></a>
-			<h1><span></span><br><small></small></h1>
+			<h1><span id="song-title"></span><br><small id="song-artist"></small></h1>
 			<audio controls autoplay src="http://stream.diazol.hu:35200/stream"></audio>
 		</figure>
 	</div>

@@ -6,11 +6,8 @@
   "author": "ShadeSoft",
   "license": "MIT",
   "repository": "https://github.com/ShadeSoft/rocker-radio",
-  "dependencies": {
-    "jquery": "^3.4.1"
-  },
   "devDependencies": {
-    "electron": "^5.0.3",
+    "electron": "^6.0.1",
     "electron-packager": "^13.1.1"
   },
   "scripts": {
