@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Rocker Rádió - unofficial Electron wrapper",
     "main": "app.js",
-    "author": "ShadeSoft",
+    "author": "ShadeSoft <info@shadesoft.hu>",
     "license": "MIT",
     "homepage": "http://rockerradio.online",
     "repository": "https://github.com/ShadeSoft/rocker-radio",
@@ -11,18 +11,10 @@
         "electron": "^6.0.1",
         "electron-builder": "^21.2.0"
     },
-    "build": {
-        "appId": "hu.shadesoft.rocker-radio",
-        "productName": "Rocker Rádió",
-        "win": {
-            "target": "portable"
-        }
-    },
     "scripts": {
         "start": "electron .",
         "dir": "electron-builder --dir",
         "build": "electron-builder",
-        "build-win": "electron-builder --win --x64 --ia32 nsis msi portable zip",
-        "build-linux": "electron-builder --linux --x64 --ia32 deb tar.gz zip"
+        "build-all": "electron-builder -wl"
     }
 }
