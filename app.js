@@ -12,7 +12,7 @@ function createWindow() {
 		icon: __dirname + '/icon.png'
 	});
 
-	bw.loadFile('index.html');
+	bw.loadFile('app.html');
 
 	bw.on('closed', () => {
 		bw = null;
