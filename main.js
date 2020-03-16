@@ -1,19 +1,19 @@
 const appTitle    = 'Rocker Rádió';
 const streamUrl   = 'http://rockerradio.online/live.mp3';
 const dataUrl     = 'http://stream.diazol.hu:35200/7.html';
-const trackDataNo = 11;
+const trackDataNo = 6;
 
-let artist,
-    player,
-    title,
-    toggle;
+let player,
+    toggle,
+    artist,
+    title;
 
 document.addEventListener('DOMContentLoaded', () => {
-	title  = document.getElementById('song-title');
-    artist = document.getElementById('song-artist');
-
     player = document.getElementById('player');
     toggle = document.getElementById('toggle-player');
+
+    artist = document.getElementById('song-artist');
+    title  = document.getElementById('song-title');
 
     toggle.onclick = () => togglePlayer();
     togglePlayer();
@@ -38,27 +38,21 @@ let togglePlayer = () => {
     }
 };
 
-let loadSongData = () => {
+let loadSongData = async () => {
     if(!player.paused) {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if(this.readyState === 4 && this.status === 200) {
-                let data = this.responseText.replace(/<[^>]+>/g, '').split(',')[trackDataNo]
-                    .replace(/\[[0-9]{4}]/, '');
-                document.title = '▶ ' + data + ' | ' + appTitle;
-                data = data.split(' - ');
-                title.innerHTML = data[1] ? data[1].trim() : '';
-                artist.innerHTML = data[0] ? data[0].trim() : '';
-            }
-        };
+        let data = (await (await fetch(dataUrl)).text()).replace(/<[^>]+>/g, '').split(',')[trackDataNo]
+            .replace(/\[[0-9]{4}]/, '');
 
-        xhr.open('GET', dataUrl, true);
-        xhr.send();
+        document.title = '▶ ' + data + ' | ' + appTitle;
+
+        data = data.split(' - ');
+        title.textContent  = data[1] ? data[1].trim() : '';
+        artist.textContent = data[0] ? data[0].trim() : '';
     }
 };
 
 let clearSongData = () => {
-    document.title = appTitle;
-    title.innerHTML = '';
-    artist.innerHTML = '';
+    document.title     = appTitle;
+    title.textContent  = '';
+    artist.textContent = '';
 };
