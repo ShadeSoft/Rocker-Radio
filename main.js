@@ -40,7 +40,9 @@ let togglePlayer = () => {
 
 let loadSongData = async () => {
     if(!player.paused) {
-        let data = (await (await fetch(dataUrl)).text()).replace(/<[^>]+>/g, '').split(',')[trackDataNo]
+        let data = (await (await fetch(dataUrl, {
+            headers: { "Content-Type": "text/html; charset=UTF-8" }
+        })).text()).replace(/<[^>]+>/g, '').split(',')[trackDataNo]
             .replace(/\[[0-9]{4}]/, '');
 
         document.title = '▶ ' + data + ' | ' + appTitle;
